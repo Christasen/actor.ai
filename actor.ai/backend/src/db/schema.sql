@@ -1,0 +1,39 @@
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(50) UNIQUE NOT NULL,
+  password VARCHAR(255) NOT NULL,
+  is_admin BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE actors (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  birthplace VARCHAR(100),
+  birthday DATE,
+  bio TEXT,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE movies (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL,
+  release_year INTEGER,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE actor_movies (
+  actor_id INTEGER REFERENCES actors(id) ON DELETE CASCADE,
+  movie_id INTEGER REFERENCES movies(id) ON DELETE CASCADE,
+  role VARCHAR(100),
+  PRIMARY KEY (actor_id, movie_id)
+);
+
+CREATE TABLE photos (
+  id SERIAL PRIMARY KEY,
+  actor_id INTEGER REFERENCES actors(id) ON DELETE CASCADE,
+  url VARCHAR(255) NOT NULL,
+  is_primary BOOLEAN DEFAULT false,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+); 
